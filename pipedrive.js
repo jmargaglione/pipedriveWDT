@@ -40,7 +40,7 @@
     // Download the data
     myConnector.getData = function (table, doneCallback) {
         var apiObj = JSON.parse(tableau.connectionData),
-            apiCall = "https://api.pipedrive.com/v1/" + table + "?api_token=" + apiObj.apiToken;
+            apiCall = "https://api.pipedrive.com/v1/" + table.tableInfo.id + "?api_token=" + apiObj.apiToken;
 
         tableau.log("apiCall=" + apiCall);
 
