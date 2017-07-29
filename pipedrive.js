@@ -278,15 +278,15 @@
 			{ id: 'is_you', dataType: tableau.dataTypeEnum.bool },
 		];
 
-		let activitiesTable = { id: 'activities', alias: 'Activities', columns: activitiesCols };
-		let dealsTable = { id: 'deals', alias: 'Deals', columns: dealsCols };
-		let goalsTable = { id: 'goals', alias: 'Goals', columns: goalsCols };
-		let notesTable = { id: 'notes', alias: 'Notes', columns: notesCols };
-		let organizationsTable = { id: 'organizations', alias: 'Organizations', columns: organizationsCols };
-		let personsTable = { id: 'persons', alias: 'Persons', columns: personsCols };
-		let productsTable = { id: 'products', alias: 'Products', columns: productsCols };
-		let stagesTable = { id: 'stages', alias: 'Stages', columns: stagesCols };
-		let usersTable = { id: 'users', alias: 'Users', columns: usersCols };
+		var activitiesTable = { id: 'activities', alias: 'Activities', columns: activitiesCols };
+		var dealsTable = { id: 'deals', alias: 'Deals', columns: dealsCols };
+		var goalsTable = { id: 'goals', alias: 'Goals', columns: goalsCols };
+		var notesTable = { id: 'notes', alias: 'Notes', columns: notesCols };
+		var organizationsTable = { id: 'organizations', alias: 'Organizations', columns: organizationsCols };
+		var personsTable = { id: 'persons', alias: 'Persons', columns: personsCols };
+		var productsTable = { id: 'products', alias: 'Products', columns: productsCols };
+		var stagesTable = { id: 'stages', alias: 'Stages', columns: stagesCols };
+		var usersTable = { id: 'users', alias: 'Users', columns: usersCols };
 
 		if (inputForm.tables.indexOf('activities') >= 0) callbackTables.push(activitiesTable);
 		if (inputForm.tables.indexOf('deals') >= 0) callbackTables.push(dealsTable);
@@ -303,16 +303,16 @@
 
 	// Download the data
 	myConnector.getData = function (table, doneCallback) {
-		let inputForm = JSON.parse(tableau.connectionData);
+		var inputForm = JSON.parse(tableau.connectionData);
 
-		let tableData = [];
-		let len;
-		let lenj;
-		let i = 0;
-		let j = 0;
-		let r = 0;
-		let start = 0;
-		let limit = 500;
+		var tableData = [];
+		var len;
+		var lenj;
+		var i = 0;
+		var j = 0;
+		var r = 0;
+		var start = 0;
+		var limit = 500;
 
 		function formatURL(table, api_token, start, limit, start_date, end_date) {
 			var url = 'https://api.pipedrive.com/v1/' + table + '?api_token=' + api_token + '&start=' + start + '&limit=' + limit;
@@ -322,24 +322,24 @@
 		}
 
 		if (inputForm.tables.indexOf(table.tableInfo.id) >= 0) {
-			let hasMore = true;
+			var hasMore = true;
 
 			while (hasMore) {
 				$.ajax({
 					url: formatURL(table.tableInfo.id, inputForm.apiKey, start, limit, inputForm.startDate, inputForm.endDate),
 					dataType: 'json',
 					async: false,
-					success(resp) {
+					success: function(resp) {
 						r = r + 1;
 						if (r > 100) return;
 
 						hasMore = false;
 
 						// This is the payload we care about
-						let _data = resp.data;
+						var _data = resp.data;
 
 						// This is pagination data (if available)
-						let extra = resp.additional_data;
+						var extra = resp.additional_data;
 
 						if (extra && extra.pagination.more_items_in_collection) {
 							hasMore = true;
@@ -356,7 +356,7 @@
 									ndata.participant_count = participants.length;
 									ndata.participants = '';
 									for (j = 0, lenj = _data[i].participants.length; j < lenj; j++) {
-										ndata.participants = `${ndata.participants + _data[i].participants[j].person_id};`;
+										ndata.participants = ndata.participants + _data[i].participants[j].person_id;
 									}
 									ndata.participants = ndata.participants.slice(0, -1);
 								}
@@ -439,7 +439,7 @@
 
 						table.appendRows(tableData);
 					},
-          error(resp) {
+          error: function(resp) {
             hasMore = false;
           },
 				});
@@ -481,6 +481,7 @@
 			   * 0 = OK
          * 1 = invalid date format
          * 2 = start date is after end date
+         * 3 = no API key
          */
 				if ((form.startDate !== null && form.startDate.toString() === 'Invalid Date')
           || (form.endDate !== null && form.endDate.toString() === 'Invalid Date'))
@@ -490,6 +491,8 @@
 					// Check that start is earlier than finish
 					if (form.startDate > form.endDate) return 2;
 				}
+
+				if(form.apiKey.length !== 40) return 3;
 
 				return 0;
 			}
@@ -503,6 +506,7 @@
 			} else {
 				if(valid === 1) $('#errorMsg').html('<strong>Invalid Date entered</strong>');
 				else if(valid === 2) $('#errorMsg').html('<strong>End date must be after start date</strong>');
+				else if(valid === 3) $('#errorMsg').html('<strong>Missing or incorrect API key</strong>');
 			}
 		});
 	});
