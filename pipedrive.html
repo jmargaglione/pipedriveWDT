@@ -1,15 +1,27 @@
 <html>
 <head>
-    <title>Bill 4 Time Connector</title>
+    <title>Pipedrive Connector</title>
     <meta http-equiv="Cache-Control" content="no-store" />
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 
     <script src="https://connectors.tableau.com/libs/tableauwdc-2.2.latest.js" type="text/javascript"></script>
-    <!--script src="https://jmargaglione.github.io/bill4timeWDC/b4t.js" type="text/javascript"></script-->
-    <script src="b4t.js" type="text/javascript"></script>
+    <!--script src="https://jmargaglione.github.io/pipedriveWDC/pipedrive.js" type="text/javascript"></script-->
+    <script src="pipedrive.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -35,28 +47,32 @@
                     <h3>Tables</h3>
                     <p>Choose tables to include in Extract</p>
                     <div class="checkbox">
+                        <label><input type="checkbox" id="activities" value="" checked="checked">Activities</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="deals" value="" checked="checked">Deals</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="goals" value="" checked="checked">Goals</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="notes" value="" checked="checked">Notes</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="organizations" value="" checked="checked">Organizations</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="persons" value="" checked="checked">Persons</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="products" value="" checked="checked">Products</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="stages" value="" checked="checked">Stages</label>
+                    </div>
+                    <div class="checkbox">
                         <label><input type="checkbox" id="users" value="" checked="checked">Users</label>
                     </div>
-                    <!--
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="clients" value="" checked="checked">Clients</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="projects" value="" checked="checked">Projects</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="timeEntries" value="" checked="checked">Time Entries</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="expenses" value="" checked="checked">Expenses</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="invoices" value="" checked="checked">Invoices</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="payments" value="" checked="checked">Payments</label>
-                    </div>
-                    -->
 
                     <!-- Choose the date range -->
                     <h3>Date Range</h3>
@@ -70,13 +86,16 @@
 
                     <div class="form-group row"> <!-- Date input -->
                         <div class="input-group">
-                            <span class="input-group-addon">End Date</span>
+                            <span class="input-group-addon">End Date&nbsp;</span>
                             <input class="form-control" id="end-date" name="end-date" placeholder="MM/DD/YYYY" type="text"/>
                         </div>
                     </div>
 				</form>
-                <button type = "button" id = "submitButton" class = "btn btn-success" style = "margin: 10px;">Finished</button>
+
                 <div id="errorMsg"></div>
+
+                <button type = "button" id = "submitButton" class = "btn btn-success" style = "margin: 10px;">Finished</button>
+
             </div>
         </div>
     </div>
